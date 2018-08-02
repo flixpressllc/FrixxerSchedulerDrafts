@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrixxerSchedulerDrafts", "FrixxerSchedulerDrafts\FrixxerSchedulerDrafts.csproj", "{9377B671-F77D-4606-9541-A30422CD4DA0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrixxerSchedulerDrafts.ScheduledData", "FrixxerSchedulerDrafts.ScheduledData\FrixxerSchedulerDrafts.ScheduledData.csproj", "{AEECB78C-0651-4AAD-AD3A-3670A935046C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrixxxerSchedulerDrafts.ScheduledData.TestsApp", "FrixxxerSchedulerDrafts.ScheduledData.TestsApp\FrixxxerSchedulerDrafts.ScheduledData.TestsApp.csproj", "{829D6A54-228B-453A-AA73-C5E79AC24F6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{9377B671-F77D-4606-9541-A30422CD4DA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9377B671-F77D-4606-9541-A30422CD4DA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9377B671-F77D-4606-9541-A30422CD4DA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEECB78C-0651-4AAD-AD3A-3670A935046C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEECB78C-0651-4AAD-AD3A-3670A935046C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEECB78C-0651-4AAD-AD3A-3670A935046C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEECB78C-0651-4AAD-AD3A-3670A935046C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{829D6A54-228B-453A-AA73-C5E79AC24F6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{829D6A54-228B-453A-AA73-C5E79AC24F6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{829D6A54-228B-453A-AA73-C5E79AC24F6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{829D6A54-228B-453A-AA73-C5E79AC24F6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
