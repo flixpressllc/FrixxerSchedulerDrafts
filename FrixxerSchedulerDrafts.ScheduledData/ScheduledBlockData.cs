@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace FrixxerSchedulerDrafts.ScheduledData
 {
     public class ScheduledBlockData
     {
+        [JsonConverter(typeof(RectAreaConverter))]
         public List<IRectArea> RectAreas { get; set; }
 
         public ScheduledBlockData()
