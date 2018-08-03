@@ -24,6 +24,19 @@ namespace FrixxxerSchedulerDrafts.ScheduledData.TestsApp
             string serialized = JsonConvert.SerializeObject(data, jsonSerializerSettings);
 
             Console.WriteLine(serialized);
+
+            FileProcessor fp = new FileProcessor();
+
+            fp.Write("C:/FrixxerFiles/sched1.json", serialized);
+
+            ScheduledBlockData dataB = ScheduledBlockDataCreator.CreateB();
+
+            string serializedB = JsonConvert.SerializeObject(dataB, jsonSerializerSettings);
+
+            Console.WriteLine(serializedB);
+
+            fp.Write("C:/FrixxerFiles/sched2.json", serializedB);
+
             /*
             We already know that this works, so we'll comment it out.
 
