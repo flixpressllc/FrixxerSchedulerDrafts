@@ -23,7 +23,12 @@ namespace Frixxer.PresenterConsoleApp
 
             var services = new ServiceCollection();
 
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddSingleton<ITimeLogProvider, TimeLogProvider>();
+            services.AddSingleton<FileProcessor>();
+            services.AddSingleton<IDownloadService, DownloadService>();
+            services.AddSingleton<IAdsService, AdsService>();
+            services.AddSingleton<IFrixxerService, FrixxerService>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

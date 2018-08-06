@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrixxxerSchedulerDrafts.Sch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frixxer.PresenterConsoleApp", "Frixxer.PresenterConsoleApp\Frixxer.PresenterConsoleApp.csproj", "{93FCE6CB-6A5A-4BC9-AAB1-D85B972A902D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frixxer", "Frixxer\Frixxer.csproj", "{42718AB8-1EE8-4B63-9E5C-2FDB5350D47A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frixxer.EntityFramework", "Frixxer.EntityFramework\Frixxer.EntityFramework.csproj", "{060FCF4A-C497-4811-A263-536B477DB39E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{93FCE6CB-6A5A-4BC9-AAB1-D85B972A902D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93FCE6CB-6A5A-4BC9-AAB1-D85B972A902D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93FCE6CB-6A5A-4BC9-AAB1-D85B972A902D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42718AB8-1EE8-4B63-9E5C-2FDB5350D47A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42718AB8-1EE8-4B63-9E5C-2FDB5350D47A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42718AB8-1EE8-4B63-9E5C-2FDB5350D47A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42718AB8-1EE8-4B63-9E5C-2FDB5350D47A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{060FCF4A-C497-4811-A263-536B477DB39E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{060FCF4A-C497-4811-A263-536B477DB39E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{060FCF4A-C497-4811-A263-536B477DB39E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{060FCF4A-C497-4811-A263-536B477DB39E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
