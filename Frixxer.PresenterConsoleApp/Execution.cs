@@ -60,6 +60,7 @@ namespace Frixxer.PresenterConsoleApp
                 });
 
                 ManageScrollTextsForPresentation(fullPresentation, presentation.ScheduledBlockData, scrollApiProviderFactory);
+                ManageStaticContent(fullPresentation, presentation.ScheduledBlockData, downloadService);
 
                 allPresentations.Add(fullPresentation);
             });
@@ -101,6 +102,17 @@ namespace Frixxer.PresenterConsoleApp
                         fullPresentation.ScrollTexts.Add($"Error: Scroll API Provider { scrollRectArea.ApiType } not found...");
                 }
             });
+        }
+
+        private static void ManageStaticContent(
+            FullPresentation fullPresentation,
+            ScheduledBlockData scheduledBlockData,
+            IDownloadService downloadService)
+        {
+            StaticRectArea staticRectArea = scheduledBlockData.RectAreas.Where(ra => (ra as StaticRectArea) != null).Select(ra => ra as StaticRectArea).FirstOrDefault();
+
+            if (staticRectArea != null)
+                fullPresentation.StaticImageLocalPath = downloadService.Download(staticRectArea.ImageUrl);
         }
     }
 }

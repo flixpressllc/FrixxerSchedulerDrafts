@@ -7,6 +7,7 @@ namespace FrixxerSchedulerDrafts.ScheduledData.Presented
         public long Duration { get; set; }
         public List<VideoPresentation> Videos { get; set; }
         public List<string> ScrollTexts { get; set; }
+        public string StaticImageLocalPath { get; set; }
              
         public FullPresentation()
         {
