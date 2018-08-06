@@ -1,5 +1,6 @@
 ﻿using Frixxer.EntityFramework;
 using Frixxer.PresenterConsoleApp.Services;
+using Frixxer.PresenterConsoleApp.Services.Scrolls;
 using FrixxerSchedulerDrafts.ScheduledData;
 using FrixxerSchedulerDrafts.ScheduledData.Presented;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +36,7 @@ namespace Frixxer.PresenterConsoleApp
             IFrixxerService frixxerService = ServiceProvider.GetService<IFrixxerService>();
             IAdsService adsService = ServiceProvider.GetService<IAdsService>();
             IDownloadService downloadService = ServiceProvider.GetService<IDownloadService>();
+            IScrollApiProviderFactory scrollApiProviderFactory = ServiceProvider.GetService<IScrollApiProviderFactory>();
             FileProcessor fileProcessor = ServiceProvider.GetService<FileProcessor>();
             List<PresentationViewModel<Presentation>> presentations = frixxerService.GetPresentations(DateTime.Now, 300);
 
@@ -42,6 +44,7 @@ namespace Frixxer.PresenterConsoleApp
 
             presentations.ForEach(presentation =>
             {
+                // Manage MainContent
                 MainContentRectArea mainContentRectArea = presentation.ScheduledBlockData.RectAreas.Where(ra => (ra as MainContentRectArea) != null).First() as MainContentRectArea;
 
                 FullPresentation fullPresentation = new FullPresentation();
@@ -55,6 +58,8 @@ namespace Frixxer.PresenterConsoleApp
                     videoPresentation.Ads = adsService.GetAds(video.Tags);
                     fullPresentation.Videos.Add(videoPresentation);
                 });
+
+                ManageScrollTextsForPresentation(fullPresentation, presentation.ScheduledBlockData, scrollApiProviderFactory);
 
                 allPresentations.Add(fullPresentation);
             });
@@ -73,6 +78,29 @@ namespace Frixxer.PresenterConsoleApp
             });
 
             fileProcessor.Write(outputPath, serializedPresentations);
+        }
+
+        private static void ManageScrollTextsForPresentation(
+            FullPresentation fullPresentation,
+            ScheduledBlockData scheduledBlockData,
+            IScrollApiProviderFactory scrollApiProviderFactory)
+        {
+            List<ScrollRectArea> scrollRectAreas = scheduledBlockData.RectAreas.Where(ra => (ra as ScrollRectArea) != null).Select(ra => ra as ScrollRectArea).ToList();
+
+            scrollRectAreas.ForEach(scrollRectArea =>
+            {
+                if (scrollRectArea.ScrollType == ScrollRectAreaTypes.Text)
+                    fullPresentation.ScrollTexts.Add(scrollRectArea.Text);
+                else
+                {
+                    IScrollApiProvider scrollApiProvider = scrollApiProviderFactory.CreateScrrollApiProviderInstance(scrollRectArea.ApiType);
+
+                    if (scrollApiProvider != null)
+                        fullPresentation.ScrollTexts.Add(scrollApiProvider.GetScrollText());
+                    else
+                        fullPresentation.ScrollTexts.Add($"Error: Scroll API Provider { scrollRectArea.ApiType } not found...");
+                }
+            });
         }
     }
 }
