@@ -24,10 +24,12 @@ namespace Frixxer.PresenterConsoleApp
         {
             Configuration = configuration;
             ServiceProvider = serviceProvider;
-
+                        
             Timer = new Timer(Convert.ToInt32(Configuration["PollingFrequency"]) * 1000);
             Timer.Elapsed += ExecuteOneIteration;
             Timer.Start();
+            
+            //ExecuteOneIteration(new { something = 3 }, null);
         }
 
         private static void ExecuteOneIteration(object sender, ElapsedEventArgs e)
