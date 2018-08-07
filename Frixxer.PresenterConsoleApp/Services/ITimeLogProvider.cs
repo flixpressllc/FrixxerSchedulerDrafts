@@ -3,5 +3,6 @@
     public interface ITimeLogProvider
     {
         string GenerateCurrentTimeLog();
+        string GenerateDateBasedPath();
     }
 }

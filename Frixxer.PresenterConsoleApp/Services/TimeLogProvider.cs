@@ -6,7 +6,12 @@ namespace Frixxer.PresenterConsoleApp.Services
     {
         public string GenerateCurrentTimeLog()
         {
-            return DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss");
+            return DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+        }
+
+        public string GenerateDateBasedPath()
+        {
+            return $"{DateTime.Now.ToString("yyyy")}/{DateTime.Now.ToString("MM")}/";
         }
     }
 }
