@@ -80,20 +80,21 @@ This approach seems hierarchical because there's a natural drive to then create 
 on. So far, we have NOT specified *exactly when* presentations will be aired. We have only addressed when presentations will play relative to
 each other within a span of time.
 
-## Execution
-At this point, let us assume that a user has created enough `Presentation`s to cover an entire week's period of content for one channel. We
-have a web page that reads from a .json file that will eventually contain complete instructions for what the web page will present. We
-do not know when that .json file will be created or overwritten, what creates it, and its exact data structure. We know that it will NOT
-be the exact .json for any given `Presentation` created by a user, since those are merely descriptors, not the exact statement of what
-people will actually see when it airs!
+## Equipment Setup and Execution
+As mentioned, an establishment will have one monitor displaying `Presentations` on a web page, and that one monitor that displays one web page is 
+actually a `Channel`. This monitor really is hooked up to a physical computer that runs the web page *running on localhost*. This web page will periodically
+"poll" for `Presentations` to display, and it "polls" by [attempt] reading one or more .json files. Those .json files are created by the `Presentation`s
+presenter console application, also installed and run on the same machine as the localhost web page.
 
-As discussed, there will be a continuously-running console application that will be responsible for generating and storing the .json file
-that the web page will "render". That console application will need to know what `Channel` it's for so that it will pull only 
-`Presentation`s of that particular `Channel`. Its basic query is to obtain the next x-minutes worth of `Presentation`s starting at a
-particular near-future time. For each `Presentation` returned in that query, we will need to fetch some ads (if it applies to the 
-`Presentation`) via an API call to an ads service. So, yes, for each API service that this console app will call, it needs to keep track 
-of all of multiple credentials. This console app may perform some downloading of video files (main content area), so we need to provide 
-some time between querying and airing time to ensure that all videos are downloaded before airing.
+The presenter console application is responsible for obtaining presentations of its host machine's assigned `Channel` that are scheduled to be aired shortly.
+More specifically, the console application will query the Frixxer System "give me the next x minutes worth of presentations starting at a specific near-future
+time". For each `Presentation` that the console application finds, it downloads all videos as chosen by the user at editing time, figures out exactly
+which ads to show (and then download the ads' image files), and gathers all scroll text (which may require specific API calls to multiple 3rd parties), and creates
+the "live" version (of a `Presentation`) complete with everything that HTML, CSS, and Javascript needs to execute it. The "live" version ends up in the
+.json files that the website looks for.
+
+While the presenter console application is busy polling for content and preparing those .json files, the web page is performing the execution and also looking
+for more .json files to present.
 
 ## Clientele
 This has not been discussed, though we know if someone creates `presentation`s, someone will need to be registered to the system. Tentatively,
