@@ -24,7 +24,7 @@ namespace Frixxer.PresenterConsoleApp.Services
             /*
                 We'll later do the actual API call here. But for now, we're reading json files.
             */
-            int whichPresentation = startTime.Second % 2 + 1; 
+            int whichPresentation = 1; /* startTime.Second % 2 + 1; */ 
             string whichFile = $"{Configuration["FrixxerFilesRoot"]}/sched{whichPresentation}.json";
 
             string fileContents = FileProcessor.ReadToString(whichFile);

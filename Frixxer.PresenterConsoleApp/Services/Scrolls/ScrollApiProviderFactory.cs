@@ -12,6 +12,10 @@
             {
                 return new NprScrollApiProvider();
             }
+            else if (scrollApiType == "BBC")
+            {
+                return new BbcScrollApiProvider();
+            }
 
             return null;
         }
