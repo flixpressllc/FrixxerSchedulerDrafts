@@ -1,6 +1,8 @@
 ﻿using Frixxer.EntityFramework;
+using Frixxer.PresenterConsoleApp.Models;
 using Frixxer.PresenterConsoleApp.Services;
 using Frixxer.PresenterConsoleApp.Services.Scrolls;
+using Frixxer.PresenterConsoleApp.Utils;
 using FrixxerSchedulerDrafts.ScheduledData;
 using FrixxerSchedulerDrafts.ScheduledData.Presented;
 using Microsoft.Extensions.Configuration;
@@ -27,9 +29,11 @@ namespace Frixxer.PresenterConsoleApp
 
             ExecuteOneIteration(new { something = 3 }, null);
             
+            /*
             Timer = new Timer(Convert.ToInt32(Configuration["PollingFrequency"]) * 1000);
             Timer.Elapsed += ExecuteOneIteration;
-            Timer.Start();            
+            Timer.Start();    
+            */
         }
 
         private static void ExecuteOneIteration(object sender, ElapsedEventArgs e)
@@ -97,12 +101,24 @@ namespace Frixxer.PresenterConsoleApp
                     fullPresentation.ScrollTexts.Add(scrollRectArea.Text);
                 else
                 {
+                    /*
                     IScrollApiProvider scrollApiProvider = scrollApiProviderFactory.CreateScrrollApiProviderInstance(scrollRectArea.ApiType);
 
                     if (scrollApiProvider != null)
                         fullPresentation.ScrollTexts.Add(scrollApiProvider.GetScrollText());
                     else
                         fullPresentation.ScrollTexts.Add($"Error: Scroll API Provider { scrollRectArea.ApiType } not found...");
+                    */
+                    try
+                    {
+                        List<RssFeedItem> items = RssTools.ParseToGetRssFeedItems(scrollRectArea.ApiUrl);
+
+                        fullPresentation.ScrollTexts.Add(String.Join("|", items.Take(7).Select(i => i.Title.Trim()).ToList()));
+                    }
+                    catch(Exception)
+                    {
+                        fullPresentation.ScrollTexts.Add($"Error reading from the provider { scrollRectArea.ApiType }.");
+                    }
                 }
             });
         }

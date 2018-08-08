@@ -21,8 +21,7 @@ namespace Frixxer.PresenterConsoleApp.Services
 
         public List<PresentationViewModel<Presentation>> GetPresentations(DateTime startTime, int durationInSeconds)
         {
-            /*
-                We'll later do the actual API call here. But for now, we're reading json files.
+            /* We'll later do the actual API call here. But for now, we're reading json files.
             */
             int whichPresentation = startTime.Second % 2 + 1;
             string whichFile = $"{Configuration["FrixxerFilesRoot"]}/sched{whichPresentation}.json";
