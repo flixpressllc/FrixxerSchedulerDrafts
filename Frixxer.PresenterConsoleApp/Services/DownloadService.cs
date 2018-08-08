@@ -60,7 +60,7 @@ namespace Frixxer.PresenterConsoleApp.Services
                 
             }
 
-            return saveToPath;
+            return saveToPath.Substring(Configuration["FrixxerFilesRoot"].Length);
         }
     }
 }
