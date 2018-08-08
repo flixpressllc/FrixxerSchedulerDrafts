@@ -26,11 +26,10 @@ namespace Frixxer.PresenterConsoleApp
             ServiceProvider = serviceProvider;
 
             ExecuteOneIteration(new { something = 3 }, null);
-            /*
+            
             Timer = new Timer(Convert.ToInt32(Configuration["PollingFrequency"]) * 1000);
             Timer.Elapsed += ExecuteOneIteration;
-            Timer.Start();
-            */
+            Timer.Start();            
         }
 
         private static void ExecuteOneIteration(object sender, ElapsedEventArgs e)
@@ -64,6 +63,7 @@ namespace Frixxer.PresenterConsoleApp
 
                 ManageScrollTextsForPresentation(fullPresentation, presentation.ScheduledBlockData, scrollApiProviderFactory);
                 ManageStaticContent(fullPresentation, presentation.ScheduledBlockData, downloadService);
+                ManageWidgets(fullPresentation, presentation.ScheduledBlockData);
 
                 allPresentations.Add(fullPresentation);
             });
@@ -104,6 +104,18 @@ namespace Frixxer.PresenterConsoleApp
                     else
                         fullPresentation.ScrollTexts.Add($"Error: Scroll API Provider { scrollRectArea.ApiType } not found...");
                 }
+            });
+        }
+
+        private static void ManageWidgets(
+            FullPresentation fullPresentation,
+            ScheduledBlockData scheduledBlockData
+        )
+        {
+            List<WidgetRectArea> widgetRectAreas = scheduledBlockData.RectAreas.Where(ra => (ra as WidgetRectArea) != null).Select(ra => ra as WidgetRectArea).ToList();
+
+            widgetRectAreas.ForEach(widgetRectArea => {
+                fullPresentation.WidgetsLists.Add(widgetRectArea.WidgetItems);
             });
         }
 
