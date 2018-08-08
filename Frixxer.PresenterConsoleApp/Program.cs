@@ -1,5 +1,4 @@
 ﻿using Frixxer.PresenterConsoleApp.Services;
-using Frixxer.PresenterConsoleApp.Services.Scrolls;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -27,7 +26,6 @@ namespace Frixxer.PresenterConsoleApp
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSingleton<ITimeLogProvider, TimeLogProvider>();
             services.AddSingleton<FileProcessor>();
-            services.AddSingleton<IScrollApiProviderFactory, ScrollApiProviderFactory>();
             services.AddSingleton<IDownloadService, DownloadService>();
             services.AddSingleton<IAdsService, AdsService>();
             services.AddSingleton<IFrixxerService, FrixxerService>();

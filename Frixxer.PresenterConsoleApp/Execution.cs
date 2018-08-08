@@ -1,7 +1,6 @@
 ﻿using Frixxer.EntityFramework;
 using Frixxer.PresenterConsoleApp.Models;
 using Frixxer.PresenterConsoleApp.Services;
-using Frixxer.PresenterConsoleApp.Services.Scrolls;
 using Frixxer.PresenterConsoleApp.Utils;
 using FrixxerSchedulerDrafts.ScheduledData;
 using FrixxerSchedulerDrafts.ScheduledData.Presented;
@@ -29,11 +28,9 @@ namespace Frixxer.PresenterConsoleApp
 
             ExecuteOneIteration(new { something = 3 }, null);
             
-            /*
             Timer = new Timer(Convert.ToInt32(Configuration["PollingFrequency"]) * 1000);
             Timer.Elapsed += ExecuteOneIteration;
-            Timer.Start();    
-            */
+            Timer.Start(); 
         }
 
         private static void ExecuteOneIteration(object sender, ElapsedEventArgs e)
@@ -42,7 +39,6 @@ namespace Frixxer.PresenterConsoleApp
             IFrixxerService frixxerService = ServiceProvider.GetService<IFrixxerService>();
             IAdsService adsService = ServiceProvider.GetService<IAdsService>();
             IDownloadService downloadService = ServiceProvider.GetService<IDownloadService>();
-            IScrollApiProviderFactory scrollApiProviderFactory = ServiceProvider.GetService<IScrollApiProviderFactory>();
             FileProcessor fileProcessor = ServiceProvider.GetService<FileProcessor>();
             List<PresentationViewModel<Presentation>> presentations = frixxerService.GetPresentations(DateTime.Now, 300);
 
@@ -65,7 +61,7 @@ namespace Frixxer.PresenterConsoleApp
                     fullPresentation.Videos.Add(videoPresentation);
                 });
 
-                ManageScrollTextsForPresentation(fullPresentation, presentation.ScheduledBlockData, scrollApiProviderFactory);
+                ManageScrollTextsForPresentation(fullPresentation, presentation.ScheduledBlockData);
                 ManageStaticContent(fullPresentation, presentation.ScheduledBlockData, downloadService);
                 ManageWidgets(fullPresentation, presentation.ScheduledBlockData);
 
@@ -90,8 +86,7 @@ namespace Frixxer.PresenterConsoleApp
 
         private static void ManageScrollTextsForPresentation(
             FullPresentation fullPresentation,
-            ScheduledBlockData scheduledBlockData,
-            IScrollApiProviderFactory scrollApiProviderFactory)
+            ScheduledBlockData scheduledBlockData)
         {
             List<ScrollRectArea> scrollRectAreas = scheduledBlockData.RectAreas.Where(ra => (ra as ScrollRectArea) != null).Select(ra => ra as ScrollRectArea).ToList();
 
@@ -101,14 +96,6 @@ namespace Frixxer.PresenterConsoleApp
                     fullPresentation.ScrollTexts.Add(scrollRectArea.Text);
                 else
                 {
-                    /*
-                    IScrollApiProvider scrollApiProvider = scrollApiProviderFactory.CreateScrrollApiProviderInstance(scrollRectArea.ApiType);
-
-                    if (scrollApiProvider != null)
-                        fullPresentation.ScrollTexts.Add(scrollApiProvider.GetScrollText());
-                    else
-                        fullPresentation.ScrollTexts.Add($"Error: Scroll API Provider { scrollRectArea.ApiType } not found...");
-                    */
                     try
                     {
                         List<RssFeedItem> items = RssTools.ParseToGetRssFeedItems(scrollRectArea.ApiUrl);
