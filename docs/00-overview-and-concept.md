@@ -6,6 +6,7 @@ This is NOT to be confused with FrixxerNews as this new Frixxer System is an ent
 
 The most basic produced unit at Frixxer is a `Presentation` of a succession of videos along with other content such as ads, weather bits,
 scroll text, and more. An establishment would place a monitor on display to the public which will play `Presentation`s in succession.
+Each presentation is slated to last for exactly 5 minutes, all across the board, though the `Presentation` data allows for any duration.
 
 Each `Presentation` is a single linear list of video URLs to be played in succession throughout its execution. Each video in
 the `Presentation` has `Tags`, or keywords associated with it (video, not the whole presentation), which will determine, shortly
@@ -21,11 +22,11 @@ A user creates a `Presentation` via a UI, most likely web browser-based. In the 
 in succession in the main content area. Choice of video may be a direct upload (for which the upload will immediately start upon choosing a 
 file, and a video URL returned, which would then be saved to the `Presentation`), or stock video that we will have them choose from 
 (which will be a stock video service that we need to write and administratively populate). For each main content video specified, the user
-specifies tags, or keywords, that would drive which ads will show up (if there is an ad space) while the main video is playing.
+specifies tags, or keywords, that would drive which ads will show up while the main video is playing.
 
 There arises the question of when the `Presentation` will actually air. It seems natural to store the information of when the `Presentation` 
-will air with the presentation itself, but we will address that in the scheduling aspect of this system. So, a `Presentation` will not be 
-associated with specific dates and times. A `Presentation` will be concerned only with its content and other information that 
+will air, to the `Presentation` itself, but we will address that in the scheduling aspect of this system. So, a `Presentation` will not be 
+associated with a specific date and time. A `Presentation` will be concerned only with its content and other information that 
 will drive its dynamic parts for when it actually airs. This way, the `Presentation` may be scheduled at will at any time, and the resulting
 video will have up-to-date dynamic content by the time it airs.
 
@@ -37,23 +38,23 @@ display its scheduled programming.
 
 The current targeted manifestation of a `Channel`, at this point, is a client-side web page. This means that the web page will be shown 
 with the `Presentation`s playing in it. The JS itself will expect to read a .json file at a given time and from that .json file,
-will obtain the info needed to play the `Presentation`. As to how, when, and where such a .json file is created, we will address that in
-a later technical section.
+will obtain the info needed to play the `Presentation`. We will later address the generation and details of the .json file that the
+client-side web page will read in a later technical section.
 
 ## Presentation Templates
-While creators of a `Presentation` gets to define main video content and meta-data that drives a presentation's dynamic parts, they do not
-control the physical and aesthetic aspect of a `Presentation`. While they can control which videos play in succession, they do not get to
-define where on the whole screen that main video will play or how large that rectangular area will be, nor do they get to decide location and
-size of the other content. They also do not control the length of the presentation, which is slated at 5 minutes all across the
-board. They also do not control what types of content will appear in the video, for example, they don't get to decide whether or not to
-have an ad space, let alone position it on the screen.
+While creators of a `Presentation` get to define main video content and meta-data that drives a presentation's dynamic parts, they do not
+control which types of content and how many of each that the `Presentation` will show. Yes, there will be the main video content rectangular
+area and the ad rectangular area. They do not get to decide, though, how many scrolling texts to show, or how many additional content
+rectangular areas to show (which could contain weather, trivia, stock market info, etc.). Scrolling text, additional content rectangular
+areas, and total `Presentation` duration are decided by a `PresentationTemplate`.
 
-The physicality of a `Presentation` is defined by a `PresentationTemplate`, which we as top-level administrators will create. A 
-`PresentationTemplate` dictates how many of each type of rectangular content areas will be on the entire presentation. It sounds like, 
-then, that before creating a `Presentation`, the user needs to first choose a `PresentationTemplate`. This way, the UI will automatically
-reflect, for example, that they get to fill a main content area, specify content for 3 scrolls, one ad space, and one static image space. 
-However, this is NOT the workflow although it feels natural (as we have done in all other template-based content creation systems). We will
-address this issue in the next section.
+`PresentationTemplate`s are created by top-level administrators. This implies that a user would first select a `PresentationTemplate`
+from a list, and then their blank/starting `Presentation` would be returned to them to fill and then later save. However, that is not the
+workflow of creating a `Presentation`. We will address this in a later section. 
+
+Additionally, as `PresentationTemplate`s are responsible for defining rectangular areas for additional content, scrolls, and total
+duration, they are NOT responsible for storing physical information like size, positioning of each rectangular area, fonts, borders, colors,
+background images, or any other aesthetic piece of information. We will address this in the next section.
 
 ## Presentation Templates vs. Channels vs. Web Page vs. Presentations
 Recall that a `Channel`'s actual concrete manifestation is a client-side web page. This exactly means that the rectangular areas where 
@@ -80,8 +81,11 @@ This approach seems hierarchical because there's a natural drive to then create 
 on. So far, we have NOT specified *exactly when* presentations will be aired. We have only addressed when presentations will play relative to
 each other within a span of time.
 
+For prototyping this system, scheduling is not necessary, as we will pretend that the correct `Presentations` will land on the web page at
+the right time.
+
 ## Equipment Setup and Execution
-As mentioned, an establishment will have one monitor displaying `Presentations` on a web page, and that one monitor that displays one web page is 
+As mentioned, an establishment will have one monitor displaying `Presentations` on a web page, and that one monitor that displays that web page is 
 actually a `Channel`. This monitor really is hooked up to a physical computer that runs the web page *running on localhost*. This web page will periodically
 "poll" for `Presentations` to display, and it "polls" by [attempt] reading one or more .json files. Those .json files are created by the `Presentation`s
 presenter console application, also installed and run on the same machine as the localhost web page.
